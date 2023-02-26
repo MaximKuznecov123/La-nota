@@ -5,6 +5,7 @@ package com.example.todo.Activities;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -13,16 +14,15 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.todo.Model.ToDoModel;
 import com.example.todo.R;
+import com.example.todo.UTILS.DatabaseHandler;
 
 public class Task_Creator extends AppCompatActivity {
 
-    EditText task;
-    Button createTask;
-    SharedPreferences taskName;
-    {taskName = getPreferences(MODE_PRIVATE);}
-
-    private final String NameSaved = " ";
+    private EditText task, descr;
+    private Button createTask;
+    private DatabaseHandler db;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -31,27 +31,26 @@ public class Task_Creator extends AppCompatActivity {
         setContentView(R.layout.task_creator);
 
         task = findViewById(R.id.Name);
+        descr = findViewById(R.id.description);
         createTask = findViewById(R.id.taskCreate);
 
         createTask.setOnClickListener(this::onCreateTask);
-
-        loadText();
     }
 
-    private void onCreateTask(View view){
-        SharedPreferences.Editor ed = taskName.edit();
-        ed.putString(NameSaved, task.getText().toString());
-        ed.apply();
+    private void onCreateTask(View view) {
+        db = new DatabaseHandler(this);
+        db.openDB();
+        ToDoModel newtask = new ToDoModel();
+        newtask.setTask(String.valueOf(task.getText()));
+        newtask.setDescription(String.valueOf(descr.getText()));
+        newtask.setStatus(0);
+        db.insertTask(newtask);
+        transfer();
     }
 
-    private void loadText(){
-        String savedText = taskName.getString(NameSaved, "");
-        task.setText(savedText);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        loadText();
+    public void transfer(){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
 }
