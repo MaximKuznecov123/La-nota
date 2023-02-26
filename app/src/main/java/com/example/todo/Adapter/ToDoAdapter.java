@@ -2,7 +2,9 @@ package com.example.todo.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ import java.util.List;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     private List<ToDoModel> todolist;
-    public MainActivity activity;
+    private MainActivity activity;
     private DatabaseHandler db;
 
     public ToDoAdapter(DatabaseHandler db, MainActivity activity){
@@ -70,8 +72,21 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     public void editItem(int position){
         ToDoModel item = todolist.get(position);
+        try {
+            Bundle bundle = new Bundle();
+            bundle.putInt("id",item.getId());
+            bundle.putString("task", item.getTask());
+            bundle.putString("descr", item.getDescription());
 
+            Intent i = new Intent(activity, Task_Creator.class);
+            i.putExtra("extraDATA", bundle);
+            activity.startActivity(i);
+
+        }catch (Exception e){
+            Log.e("(((((((", String.valueOf(e));
+        }
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         CheckBox task;
