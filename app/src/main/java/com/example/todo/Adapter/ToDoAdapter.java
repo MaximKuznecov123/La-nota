@@ -9,13 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todo.Activities.MainActivity;
+import com.example.todo.Activities.MainActivity.MainActivity;
 import com.example.todo.Activities.Task_Creator;
 import com.example.todo.Model.ToDoModel;
 import com.example.todo.R;
@@ -67,6 +66,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     public void setTasks(List<ToDoModel> todolist){
         this.todolist = todolist;
         notifyDataSetChanged();
+    }
+
+    public void deleteItem(int position){
+        ToDoModel item = todolist.get(position);
+        db.deleteTask(item.getId());
+        todolist.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public Context getContext(){
+        return activity;
     }
 
 

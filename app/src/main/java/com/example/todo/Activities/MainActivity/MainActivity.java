@@ -1,4 +1,4 @@
-package com.example.todo.Activities;
+package com.example.todo.Activities.MainActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,9 +6,11 @@ import android.os.Bundle;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todo.Activities.Task_Creator;
 import com.example.todo.Adapter.ToDoAdapter;
 import com.example.todo.Model.ToDoModel;
 import com.example.todo.R;
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         taskAdapter = new ToDoAdapter(db, this);
         taskRecyclerList.setAdapter(taskAdapter);
         fab = findViewById(R.id.faba);
+
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
+        itemTouchHelper.attachToRecyclerView(taskRecyclerList);
 
         fab.setOnClickListener(v -> {
             Intent i = new Intent(this, Task_Creator.class);

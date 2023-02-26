@@ -65,5 +65,6 @@ public class Task_Creator extends AppCompatActivity {
     private void onUpdateTask(View view, int id){
         db.updateTask(id, String.valueOf(task.getText()));
         db.updateTask(id, String.valueOf(description.getText()));
+        finish();
     }
 }
