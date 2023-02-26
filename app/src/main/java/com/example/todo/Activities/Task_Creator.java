@@ -37,6 +37,7 @@ public class Task_Creator extends AppCompatActivity {
         createTask.setOnClickListener(this::onCreateTask);
     }
 
+
     private void onCreateTask(View view) {
         db = new DatabaseHandler(this);
         db.openDB();
@@ -45,12 +46,8 @@ public class Task_Creator extends AppCompatActivity {
         newtask.setDescription(String.valueOf(descr.getText()));
         newtask.setStatus(0);
         db.insertTask(newtask);
-        transfer();
-    }
-
-    public void transfer(){
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
         finish();
     }
+
+
 }
