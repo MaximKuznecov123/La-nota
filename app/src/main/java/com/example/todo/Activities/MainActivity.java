@@ -39,19 +39,17 @@ public class MainActivity extends AppCompatActivity {
         db.openDB();
         taskList = new ArrayList<>();
 
-
         taskRecyclerList = findViewById(R.id.taskRecyclerList);
         taskRecyclerList.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter = new ToDoAdapter(this);
+        taskAdapter = new ToDoAdapter(db, this);
         taskRecyclerList.setAdapter(taskAdapter);
         fab = findViewById(R.id.faba);
 
-
-    fab.setOnClickListener(v -> {
-        Intent i = new Intent(this, Task_Creator.class);
-        startActivity(i);
-    });
+        fab.setOnClickListener(v -> {
+            Intent i = new Intent(this, Task_Creator.class);
+            startActivity(i);});
         DBloader();
+
     }
 
     @Override

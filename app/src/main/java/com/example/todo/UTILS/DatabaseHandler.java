@@ -70,6 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         ToDoModel task = new ToDoModel();
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
+                        task.setDescription(cur.getString(cur.getColumnIndex(DESCR)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
                         taskList.add(task);
                     }while(cur.moveToNext());

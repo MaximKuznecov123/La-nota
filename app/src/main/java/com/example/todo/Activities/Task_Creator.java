@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,17 +38,24 @@ public class Task_Creator extends AppCompatActivity {
         createTask.setOnClickListener(this::onCreateTask);
     }
 
-
     private void onCreateTask(View view) {
-        db = new DatabaseHandler(this);
-        db.openDB();
-        ToDoModel newtask = new ToDoModel();
-        newtask.setTask(String.valueOf(task.getText()));
-        newtask.setDescription(String.valueOf(descr.getText()));
-        newtask.setStatus(0);
-        db.insertTask(newtask);
-        finish();
+        String s = String.valueOf(task.getText());
+        if(s.equals("")){
+            Toast.makeText(this, "Заголовок не может быть пустым", Toast.LENGTH_SHORT).show();
+        }else{
+            db = new DatabaseHandler(this);
+            db.openDB();
+            ToDoModel newtask = new ToDoModel();
+            newtask.setTask(s);
+            newtask.setDescription(String.valueOf(descr.getText()));
+            newtask.setStatus(0);
+            db.insertTask(newtask);
+            finish();
+        }
     }
 
+    public void setArguments(){
+
+    }
 
 }
