@@ -7,12 +7,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.todo.Model.ToDoModel;
+import com.example.todo.Model.TaskModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class TasksHandler extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
     private static final String NAME = "toDoListDatabase";
@@ -28,7 +28,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + STATUS + " INTEGER)";
     private SQLiteDatabase db;
 
-    public DatabaseHandler(Context context){
+    public TasksHandler(Context context){
         super(context, NAME, null, VERSION);
     }
 
@@ -49,7 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public void insertTask(ToDoModel task){
+    public void insertTask(TaskModel task){
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTask());
         cv.put(DESCR, task.getDescription());
@@ -58,8 +58,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<ToDoModel> getAllTasks(){
-        List<ToDoModel> taskList = new ArrayList<>();
+    public List<TaskModel> getAllTasks(){
+        List<TaskModel> taskList = new ArrayList<>();
         Cursor cur = null;
         db.beginTransaction();
         try{
@@ -67,7 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if(cur != null){
                 if (cur.moveToFirst()){
                     do {
-                        ToDoModel task = new ToDoModel();
+                        TaskModel task = new TaskModel();
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setDescription(cur.getString(cur.getColumnIndex(DESCR)));

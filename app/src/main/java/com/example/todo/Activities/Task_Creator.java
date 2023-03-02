@@ -10,20 +10,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.todo.Model.ToDoModel;
+import com.example.todo.Model.TaskModel;
 import com.example.todo.R;
-import com.example.todo.UTILS.DatabaseHandler;
+import com.example.todo.UTILS.TasksHandler;
 
 public class Task_Creator extends AppCompatActivity {
 
     private EditText task, description;
-    private DatabaseHandler db;
+    private TasksHandler db;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.task_creator);
+        setContentView(R.layout.activity_createtask);
 
         task = findViewById(R.id.Name);
         description = findViewById(R.id.description);
@@ -32,7 +32,7 @@ public class Task_Creator extends AppCompatActivity {
         Intent i = getIntent();
         Bundle bundle = i.getBundleExtra("extraDATA");
 
-        db = new DatabaseHandler(this);
+        db = new TasksHandler(this);
         db.openDB();
 
         if(bundle != null){
@@ -53,7 +53,7 @@ public class Task_Creator extends AppCompatActivity {
         if(s.equals("")){
             Toast.makeText(this, "Заголовок не может быть пустым", Toast.LENGTH_SHORT).show();
         }else{
-            ToDoModel newtask = new ToDoModel();
+            TaskModel newtask = new TaskModel();
             newtask.setTask(s);
             newtask.setDescription(String.valueOf(description.getText()));
             newtask.setStatus(0);
@@ -63,8 +63,13 @@ public class Task_Creator extends AppCompatActivity {
     }
 
     private void onUpdateTask(View view, int id){
-        db.updateTask(id, String.valueOf(task.getText()));
-        db.updateTask(id, String.valueOf(description.getText()));
-        finish();
+        String s = String.valueOf(task.getText());
+        if(s.equals("")){
+            Toast.makeText(this, "Заголовок не может быть пустым", Toast.LENGTH_SHORT).show();
+        }else {
+            db.updateTask(id, s);
+            db.updateDescr(id, String.valueOf(description.getText()));
+            finish();
+        }
     }
 }

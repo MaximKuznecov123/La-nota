@@ -1,25 +1,27 @@
 package com.example.todo.Activities.MainActivity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todo.Adapter.ToDoAdapter;
+import com.example.todo.Adapter.TaskAdapter;
 import com.example.todo.R;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
-    private ToDoAdapter adapter;
+    private final TaskAdapter adapter;
 
-    public RecyclerItemTouchHelper(ToDoAdapter adapter){
+    public RecyclerItemTouchHelper(TaskAdapter adapter){
         super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
     }
@@ -34,16 +36,15 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getAdapterPosition();
         if(direction == ItemTouchHelper.LEFT){
-            AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(TaskAdapter.getContext());
             builder.setTitle("Delete Task");
-            builder.setMessage("Are you sure you want to dlete this task?");
-            builder.setPositiveButton("Confirm", (dialog, which) -> {
-                adapter.deleteItem(position);
-            });
-            builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-              adapter.notifyItemChanged(viewHolder.getAdapterPosition());
-            });
+            builder.setMessage("Are you sure you want to delete this task?");
+            builder.setPositiveButton("Confirm", (dialog, which) -> adapter.deleteItem(position));
+            builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> adapter.notifyItemChanged(viewHolder.getAdapterPosition()));
             AlertDialog dialog = builder.create();
+            dialog.setOnCancelListener((DialogInterface.OnCancelListener) menu -> {
+                adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+            });
             dialog.show();
         }
         else{
@@ -61,14 +62,14 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         View itemView = viewHolder.itemView;
         int backgroundCornerOffset = 20;
         if(dX>0){
-            icon = ContextCompat.getDrawable(adapter.getContext(), R.drawable.ic_baseline_mode_edit);
+            icon = ContextCompat.getDrawable(TaskAdapter.getContext(), R.drawable.ic_baseline_mode_edit);
             background = new ColorDrawable(Color.GREEN);
         }else{
-            icon = ContextCompat.getDrawable(adapter.getContext(), R.drawable.ic_baseline_delete_forever);
+            icon = ContextCompat.getDrawable(TaskAdapter.getContext(), R.drawable.ic_baseline_delete_forever);
             background = new ColorDrawable(Color.RED);
         }
 
-        assert icon != null;
+
         int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
         int iconTop = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
         int iconBottom = iconTop + icon.getIntrinsicHeight();

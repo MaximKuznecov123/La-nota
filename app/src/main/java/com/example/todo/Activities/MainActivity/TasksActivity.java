@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.Activities.Task_Creator;
-import com.example.todo.Adapter.ToDoAdapter;
-import com.example.todo.Model.ToDoModel;
+import com.example.todo.Adapter.TaskAdapter;
+import com.example.todo.Model.TaskModel;
 import com.example.todo.R;
-import com.example.todo.UTILS.DatabaseHandler;
+import com.example.todo.UTILS.TasksHandler;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 
@@ -22,14 +22,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    private DatabaseHandler db;
+public class TasksActivity extends AppCompatActivity {
+    private static TasksHandler db;
 
-    private RecyclerView taskRecyclerList;
-    private ToDoAdapter taskAdapter;
-    private ExtendedFloatingActionButton fab;
+    private static TaskAdapter taskAdapter;
 
-    private static List<ToDoModel> taskList;
+    private static List<TaskModel> taskList;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,15 +35,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = new DatabaseHandler(this);
+        db = new TasksHandler(this);
         db.openDB();
         taskList = new ArrayList<>();
 
-        taskRecyclerList = findViewById(R.id.taskRecyclerList);
+        RecyclerView taskRecyclerList = findViewById(R.id.taskRecyclerList);
         taskRecyclerList.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter = new ToDoAdapter(db, this);
+        taskAdapter = new TaskAdapter(db, this);
         taskRecyclerList.setAdapter(taskAdapter);
-        fab = findViewById(R.id.faba);
+        ExtendedFloatingActionButton fab = findViewById(R.id.faba);
 
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         DBloader();
     }
-    private void DBloader(){
+    public static void DBloader(){
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);
