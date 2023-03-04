@@ -3,8 +3,11 @@ package com.example.todo.Activities.MainActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +38,13 @@ public class TasksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        try {
+            getSupportActionBar().setTitle("URAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        }catch (Exception e){
+            Log.e("AAAAAAAAAAAAAAA", e.getMessage());
+        }
+
+
         db = new TasksHandler(this);
         db.openDB();
         taskList = new ArrayList<>();
@@ -61,6 +71,13 @@ public class TasksActivity extends AppCompatActivity {
         super.onRestart();
         DBloader();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
     public static void DBloader(){
         taskList = db.getAllTasks();
         Collections.reverse(taskList);

@@ -11,45 +11,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="name of task"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textColorHint="#d9d9d9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.283"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.119"
-        android:hint="name of task"
-        android:textColorHint="#d9d9d9"/>
+        app:layout_constraintVertical_bias="0.119" />
 
     <EditText
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="description"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textColorHint="#d9d9d9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.283"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.287"
-        android:hint="description"
-        android:textColorHint="#d9d9d9"/>
+        app:layout_constraintVertical_bias="0.287" />
 
     <EditText
         android:id="@+id/color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="color"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textColorHint="#d9d9d9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.283"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47"
-        android:hint="color"
-        android:textColorHint="#d9d9d9"/>
+        app:layout_constraintVertical_bias="0.47" />
 
     <Button
         android:id="@+id/taskCreate"

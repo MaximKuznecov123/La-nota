@@ -1,16 +1,10 @@
 package com.example.todo.Adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +28,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private List<TaskModel> todolist;
     private static TasksActivity activity;
-    private TasksHandler db;
+    private final TasksHandler db;
 
     public TaskAdapter(TasksHandler db, TasksActivity activity){
         this.db = db;
         this.activity = activity;
     }
-    public TaskAdapter(){}
 
     @NonNull
     @Override
