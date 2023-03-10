@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
-
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,39 +29,22 @@ public class TasksActivity extends AppCompatActivity {
     private static TaskAdapter taskAdapter;
 
     private static List<TaskModel> taskList;
+    private static RecyclerView taskRecyclerList;
+    private static ExtendedFloatingActionButton fab;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("");
 
-        try {
-            getSupportActionBar().setTitle("URAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        }catch (Exception e){
-            Log.e("AAAAAAAAAAAAAAA", e.getMessage());
-        }
+        initWidgets();
+        SetRecyclerItemTouchView();
 
-
-        db = new TasksHandler(this);
-        db.openDB();
-        taskList = new ArrayList<>();
-
-        RecyclerView taskRecyclerList = findViewById(R.id.taskRecyclerList);
-        taskRecyclerList.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter = new TaskAdapter(db, this);
-        taskRecyclerList.setAdapter(taskAdapter);
-        ExtendedFloatingActionButton fab = findViewById(R.id.faba);
-
-        ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
-        itemTouchHelper.attachToRecyclerView(taskRecyclerList);
-
-        fab.setOnClickListener(v -> {
-            Intent i = new Intent(this, Task_Creator.class);
-            startActivity(i);});
+        initDB();
         DBloader();
-
+        
     }
 
     @Override
@@ -78,7 +59,31 @@ public class TasksActivity extends AppCompatActivity {
         return true;
     }
 
-    public static void DBloader(){
+    public void initDB(){
+        db = new TasksHandler(this);
+        db.openDB();
+        taskList = new ArrayList<>();
+        taskAdapter = new TaskAdapter(db, this);
+        taskRecyclerList.setAdapter(taskAdapter);
+    }
+
+    public void initWidgets(){
+        taskRecyclerList = findViewById(R.id.taskRecyclerList);
+        taskRecyclerList.setLayoutManager(new LinearLayoutManager(this));
+
+        fab = findViewById(R.id.faba);
+        fab.setOnClickListener(v -> {
+            Intent i = new Intent(this, Task_Creator.class);
+            startActivity(i);});
+    }
+
+    public void SetRecyclerItemTouchView(){
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
+        itemTouchHelper.attachToRecyclerView(taskRecyclerList);
+    }
+
+    public void DBloader(){
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
         taskAdapter.setTasks(taskList);

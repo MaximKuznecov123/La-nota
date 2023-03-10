@@ -103,6 +103,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             Name = view.findViewById(R.id.name);
             Description = view.findViewById(R.id.description);
             bar = view.findViewById(R.id.color_bar);
+
             Drawable drawable = AppCompatResources.getDrawable(activity,R.drawable.event_list_colorbar);
             drawable.setTint(Color.RED);
             bar.setBackground(drawable);

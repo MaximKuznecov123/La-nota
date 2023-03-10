@@ -25,7 +25,7 @@ public class TasksHandler extends SQLiteOpenHelper {
             "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TASK + " TEXT, "
             + DESCR + " TEXT, "
-            + STATUS + " INTEGER)";
+            + STATUS + " NUMERIC)";
     private SQLiteDatabase db;
 
     public TasksHandler(Context context){
