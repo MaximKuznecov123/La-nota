@@ -2,7 +2,7 @@ package com.example.todo.Model;
 
 public class TaskModel {
     private int id, status;
-    private String task, description, COLORBAR;
+    private String task, description;
 
     public int getId() {
         return id;
@@ -36,11 +36,4 @@ public class TaskModel {
         this.description = description;
     }
 
-    public String getCOLORBAR() {
-        return COLORBAR;
-    }
-
-    public void setCOLORBAR(String COLORBAR) {
-        this.COLORBAR = COLORBAR;
-    }
 }

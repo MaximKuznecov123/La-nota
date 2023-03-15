@@ -3,8 +3,6 @@ package com.example.todo.Activities.MainActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -18,19 +16,21 @@ import com.example.todo.R;
 import com.example.todo.UTILS.TasksHandler;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TasksActivity extends AppCompatActivity {
-    private static TasksHandler db;
+    private TasksHandler db;
 
-    private static TaskAdapter taskAdapter;
+    private TaskAdapter taskAdapter;
 
-    private static List<TaskModel> taskList;
-    private static RecyclerView taskRecyclerList;
-    private static ExtendedFloatingActionButton fab;
+    private List<TaskModel> taskList;
+    private  RecyclerView taskRecyclerList;
+    private  ExtendedFloatingActionButton fab;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -40,11 +40,12 @@ public class TasksActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         initWidgets();
-        SetRecyclerItemTouchView();
-
         initDB();
         DBloader();
-        
+
+            String currentDate = new SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(new Date());
+
+        SetRecyclerItemTouchView();
     }
 
     @Override
@@ -53,19 +54,6 @@ public class TasksActivity extends AppCompatActivity {
         DBloader();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    public void initDB(){
-        db = new TasksHandler(this);
-        db.openDB();
-        taskList = new ArrayList<>();
-        taskAdapter = new TaskAdapter(db, this);
-        taskRecyclerList.setAdapter(taskAdapter);
-    }
 
     public void initWidgets(){
         taskRecyclerList = findViewById(R.id.taskRecyclerList);
@@ -81,6 +69,14 @@ public class TasksActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerList);
+    }
+
+    public void initDB(){
+        db = new TasksHandler(this);
+        db.openDB();
+        taskList = new ArrayList<>();
+        taskAdapter = new TaskAdapter(db, this);
+        taskRecyclerList.setAdapter(taskAdapter);
     }
 
     public void DBloader(){

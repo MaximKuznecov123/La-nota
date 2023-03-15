@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.PopupMenu;
 
@@ -43,7 +44,11 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
             builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> adapter.notifyItemChanged(viewHolder.getAdapterPosition()));
 
             AlertDialog dialog = builder.create();
-            dialog.setOnCancelListener(menu -> adapter.notifyItemChanged(viewHolder.getAdapterPosition()));
+            dialog.setOnCancelListener(menu -> {
+
+                adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+
+            });
 
             dialog.show();
         }
