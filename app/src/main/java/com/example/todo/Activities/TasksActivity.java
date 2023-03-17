@@ -1,4 +1,4 @@
-package com.example.todo.Activities.MainActivity;
+package com.example.todo.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

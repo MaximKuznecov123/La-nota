@@ -2,7 +2,6 @@ package com.example.todo.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todo.Activities.MainActivity.TasksActivity;
+import com.example.todo.Activities.TasksActivity;
 import com.example.todo.Activities.Task_Creator;
 import com.example.todo.Model.TaskModel;
 import com.example.todo.R;
