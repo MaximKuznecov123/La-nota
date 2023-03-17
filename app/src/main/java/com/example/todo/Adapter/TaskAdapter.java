@@ -71,17 +71,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void deleteItem(int position){
-        TaskModel item = todolist.get(position);
-        db.deleteTask(item.getId());
-        todolist.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public static TasksActivity getContext(){
-        return activity;
-    }
-
     public void editItem(int position){
         TaskModel item = todolist.get(position);
             Bundle bundle = new Bundle();
