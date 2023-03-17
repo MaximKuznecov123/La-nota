@@ -52,6 +52,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.task.setChecked(tobool(item.getStatus()));
         holder.task.setOnCheckedChangeListener((buttonView, isChecked) -> db.updateStatus(item.getId(),isChecked?1:0));
 
+        holder.view.setOnClickListener((v) -> {
+            editItem(position);
+        });
     }
     public boolean tobool(int  n){
         return n!=0;
@@ -93,19 +96,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+        View view;
         CheckBox task;
         TextView Name, Description;
         ImageView bar;
 
         ViewHolder(View view) {
             super(view);
+            this.view = view;
+
             task = view.findViewById(R.id.todocheckBox);
             Name = view.findViewById(R.id.name);
             Description = view.findViewById(R.id.description);
             bar = view.findViewById(R.id.color_bar);
 
             Drawable drawable = AppCompatResources.getDrawable(activity,R.drawable.event_list_colorbar);
-            drawable.setTint(Color.RED);
+            drawable.setTint(activity.getColor(R.color.purple_200));
             bar.setBackground(drawable);
 
         }

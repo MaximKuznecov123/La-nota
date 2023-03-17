@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">La-nota</string>
+    <string name="name">Название</string>
+    <string name="descr">описание</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="cant_be_empty">Название не может быть пустым</string>
+</resources>

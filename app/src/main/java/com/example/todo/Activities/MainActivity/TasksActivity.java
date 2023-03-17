@@ -3,12 +3,14 @@ package com.example.todo.Activities.MainActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todo.AbstractClasses.MyActivity;
 import com.example.todo.Activities.Task_Creator;
 import com.example.todo.Adapter.TaskAdapter;
 import com.example.todo.Model.TaskModel;
@@ -18,15 +20,17 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class TasksActivity extends AppCompatActivity {
+public class TasksActivity extends MyActivity {
     private TasksHandler db;
 
     private TaskAdapter taskAdapter;
+    TextView text;
 
     private List<TaskModel> taskList;
     private  RecyclerView taskRecyclerList;
@@ -43,9 +47,6 @@ public class TasksActivity extends AppCompatActivity {
         initDB();
         DBloader();
 
-            String currentDate = new SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(new Date());
-
-        SetRecyclerItemTouchView();
     }
 
     @Override
@@ -59,17 +60,17 @@ public class TasksActivity extends AppCompatActivity {
         taskRecyclerList = findViewById(R.id.taskRecyclerList);
         taskRecyclerList.setLayoutManager(new LinearLayoutManager(this));
 
+        text = findViewById(R.id.text);
+        String date = new SimpleDateFormat("dd-MM-yy").format(Calendar.getInstance().getTime());
+        text.setText(date);
+
         fab = findViewById(R.id.faba);
         fab.setOnClickListener(v -> {
             Intent i = new Intent(this, Task_Creator.class);
+            Task_Creator.adapter = taskAdapter;
             startActivity(i);});
     }
 
-    public void SetRecyclerItemTouchView(){
-        ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new RecyclerItemTouchHelper(taskAdapter));
-        itemTouchHelper.attachToRecyclerView(taskRecyclerList);
-    }
 
     public void initDB(){
         db = new TasksHandler(this);

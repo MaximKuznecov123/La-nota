@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">La-nota</string>
-
-
+    <string name="name">Name</string>
+    <string name="descr">Description</string>
+    <string name="confirm">Confirm</string>
+    <string name="cant_be_empty">Name can\'t be empty</string>
 </resources>
